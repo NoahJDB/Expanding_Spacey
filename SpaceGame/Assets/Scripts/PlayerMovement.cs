@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
+    [SerializeField]
+    private int speed;
+
 	private bool jumping;
 	private BoxCollider _playerCollider;
 	private Rigidbody _rigidBody;
@@ -18,14 +21,20 @@ public class PlayerMovement : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+        float playerX = transform.position.x;
         if (Physics.Raycast(transform.position, Vector3.down, 1))
         {
-            _rigidBody.AddForce(Input.GetAxis("Horizontal") * 10, 0, 0);
+            _rigidBody.AddForce(Input.GetAxis("Horizontal") * 11 * speed, 0, 0);
         }
         if (Input.GetButtonDown("Jump") && Physics.Raycast(transform.position, Vector3.down, 1))
 		{
-			_rigidBody.AddForce (Vector3.up * 300);
-            _rigidBody.AddForce (Input.GetAxis("Horizontal")*2,0,0);
+			_rigidBody.AddForce (Vector3.up * 300 * speed);
+            jumping = true;
 		}
+        if (jumping)
+        {
+            _rigidBody.AddForce(Input.GetAxis("Horizontal") * 10 * speed, 0, 0);
+            if(Physics.Raycast(transform.position, Vector3.down, 1)) jumping = false;
+        }
 	}
 }
