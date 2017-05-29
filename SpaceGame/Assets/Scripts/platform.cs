@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class platform : MonoBehaviour {
 
-	private BoxCollider2D _platformCollider;
+	private BoxCollider _platformCollider;
 
 	void Awake	() {
-		_platformCollider = GetComponent<BoxCollider2D>();
+		_platformCollider = GetComponent<BoxCollider>();
 	}
 	// Use this for initialization
 	void Start () {

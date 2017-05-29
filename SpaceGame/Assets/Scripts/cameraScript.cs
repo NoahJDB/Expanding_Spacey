@@ -4,20 +4,16 @@ using UnityEngine;
 
 public class cameraScript : MonoBehaviour {
 
-    
 
-    [SerializeField]
-    public Transform objectA;
- 
-    private Transform _transform;
 
-    void Awakes()
+    public Transform _target;
+    //private Rigidbody _rigidBody;
+
+
+    void LateUpdate()
     {
-        _transform = GetComponent<Transform>();    
-    }
-
-    void Update()
-    {
-        _transform.TransformPoint(objectA.position.x, _transform.position.y, _transform.position.z);
+        //origin = _transform. (_transform.position.x, _transform.position.y);
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x,0,11),transform.position.y,transform.position.z);
+        
     }
 }
