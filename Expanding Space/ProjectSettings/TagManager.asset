@@ -41,3 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: stamina score en progress
+    uniqueID: 1855196441
+    locked: 0
+  - name: HP
+    uniqueID: 1596376063
+    locked: 0
