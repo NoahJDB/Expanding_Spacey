@@ -13,7 +13,7 @@ public class cameraScript : MonoBehaviour {
     void LateUpdate()
     {
         //origin = _transform. (_transform.position.x, _transform.position.y);
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x,0,11),transform.position.y,transform.position.z);
+        transform.position = new Vector3(Mathf.Clamp(_target.position.x,0,11),Mathf.Clamp(_target.position.y,-1,5),transform.position.z);
         
     }
 }

@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class destroyer : MonoBehaviour {
 
+    private colliderP _collider;
+
     void Awake()
     {
-
+        _collider = GetComponent<colliderP>();
     }
 
     void OnTriggerEnter(Collider detect)

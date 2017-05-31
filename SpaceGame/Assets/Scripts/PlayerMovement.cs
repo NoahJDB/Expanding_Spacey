@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour {
     private bool jumping;
 	private BoxCollider _playerCollider;
     private colliderP _collider;
-	private Rigidbody _rigidBody;
+	private Rigidbody2D _rigidBody;
 	private platform _platform;
     private Transform _transform;
     
@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour {
 	void Awake(){
         _collider = GetComponent<colliderP>();
 		_playerCollider = GetComponent<BoxCollider>();
-		_rigidBody = GetComponent<Rigidbody>();
+		_rigidBody = GetComponent<Rigidbody2D>();
 		_platform = GetComponent<platform>();
         _transform = GetComponent<Transform>();
 	}
@@ -37,7 +37,7 @@ public class PlayerMovement : MonoBehaviour {
     void Start()
     {
         moveSpeed = 0.1f;
-        jumpSpeed = 8f;
+        jumpSpeed = 9f;
     }
 
     // Update is called once per frame
@@ -50,7 +50,7 @@ public class PlayerMovement : MonoBehaviour {
         moveCurrentSpeed += Input.GetAxis("Horizontal")*moveSpeed;
         if(Input.GetButtonDown("Jump") && Physics.Raycast(transform.position, Vector3.down, 1) && !jumping)
         {
-            jumpCurrentSpeed += jumpSpeed;
+            _rigidBody.velocity = new Vector2(0, jumpSpeed);
             jumping = true;
         }
 
@@ -62,14 +62,15 @@ public class PlayerMovement : MonoBehaviour {
         print(jumpCurrentSpeed);
 
 
-
+        
         if (!Input.anyKey)
         {
-            if (moveCurrentSpeed <= 0.05f || moveCurrentSpeed >= -0.05f) { moveCurrentSpeed = 0; jumping = false; }
-            if (moveCurrentSpeed != 0) moveCurrentSpeed *= 0.8f;
+            if (!jumping && moveCurrentSpeed <= 0.05f || moveCurrentSpeed >= -0.05f) moveCurrentSpeed = 0;
+            if (moveCurrentSpeed != 0) moveCurrentSpeed *= 0.9f;
         }
         if (jumpCurrentSpeed <= jumpSpeed / 8) jumpCurrentSpeed = 0;
         if (jumpCurrentSpeed != 0) jumpCurrentSpeed *= 0.9f;
+        if (Physics.Raycast(transform.position, Vector3.down, 1)) jumping = false;
         /*
         if (Physics.Raycast(transform.position, Vector3.down, 1))
         {
