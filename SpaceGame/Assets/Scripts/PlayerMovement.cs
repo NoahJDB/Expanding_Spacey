@@ -43,7 +43,6 @@ public class PlayerMovement : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         playerX = transform.position.x;
-        slow = speed * DoubleToFloat(_collider.slower);
         speedV = speed * DoubleToFloat(_collider.faster);
         speedH = speed * DoubleToFloat(_collider.higher);
 
@@ -54,12 +53,12 @@ public class PlayerMovement : MonoBehaviour {
             jumping = true;
         }
 
-        _rigidBody.transform.Translate(new Vector3(moveCurrentSpeed, jumpCurrentSpeed, 0f) * Time.deltaTime);
+        _rigidBody.transform.Translate(new Vector3(moveCurrentSpeed*speedH, jumpCurrentSpeed*speedV, 0f) * Time.deltaTime);
         
         //transform.Translate(new Vector3(moveCurrentSpeed, 0f, 0f) * Time.deltaTime);
        //transform.position += new Vector3(moveCurrentSpeed, 0f, 0f) * Time.deltaTime;
-        print(moveCurrentSpeed);
-        print(jumpCurrentSpeed);
+        //print(moveCurrentSpeed);
+        //print(jumpCurrentSpeed);
 
 
         
@@ -71,6 +70,9 @@ public class PlayerMovement : MonoBehaviour {
         if (jumpCurrentSpeed <= jumpSpeed / 8) jumpCurrentSpeed = 0;
         if (jumpCurrentSpeed != 0) jumpCurrentSpeed *= 0.9f;
         if (Physics.Raycast(transform.position, Vector3.down, 1)) jumping = false;
+
+        if (Time.time == _collider.timeJump) _collider.higher = 1;
+        if (Time.time == _collider.timeSpeed) _collider.faster = 1;
         /*
         if (Physics.Raycast(transform.position, Vector3.down, 1))
         {
